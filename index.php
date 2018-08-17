@@ -54,6 +54,24 @@
         
         // STEP 1
         $('input:radio[name$=-diameter]').change(function(){
+          if ($('input:radio[name="round-diameter"]:checked').prop('id') == "rrd6") {
+            $('#round-top-removable').show();
+          } else {
+            $('#round-top-removable').hide().removeClass('selected');
+            if ($('#summary-top').text() == 'Round Removable Black ABS" 6 Only') {
+              $('#summary-top').text('-');
+              $('#next, #bar5').removeClass('link-on');
+            }
+          }
+
+          if ($('input:radio[name="square-diameter"]:checked').prop('id') != "rsd8") {
+            $('#square-top-removable').show();
+          } else {
+            $('#square-top-removable').hide().removeClass('selected');
+            $('#summary-top').text('-');
+            $('#next, #bar5').removeClass('link-on');
+          }
+
           $('#summary-diameter').text($('input:radio[name="'+shape+'-diameter"]:checked').val());
           if ($('input:radio[name$=-diameter]').is(':checked') && $('input:radio[name$=-length]').is(':checked')) $('#next, #bar1, #bar2').addClass('link-on');
         });
@@ -82,7 +100,7 @@
         });
 
         // COLOR PICKER
-        $("body").on( "click", ".featherlight .picker", function() {
+        $('body').on('click', '.featherlight .picker', function() {
           $('input[name='+shape+'-finish-color]').val('RAL ' + $(this).data('code'));
           $('#'+shape+'-finish-color-swatch').css('background-color', '#'+$(this).data('hex'));
           $('#next, #bar3').addClass('link-on');
@@ -136,24 +154,14 @@
 
           $('#bar LI').removeClass('active');
           $('#bar'+$('.active').data('num')).addClass('active');
-          
-          if ($('input:radio[name$=-diameter]').is(':checked') && $('input:radio[name$=-length]').is(':checked')) $('#next').addClass('link-on');
-
-          if (
-            $('#'+shape+'-finishes > input:radio').is(':checked') ||
-            $('#'+shape+'-mounting > DIV').hasClass('selected') ||
-            $('#'+shape+'-top > DIV').hasClass('selected')
-          ) {
-            $('#next').addClass('link-on');
-          } else {
-            $('#next').removeClass('link-on');
-          }
 
           if ($('.active').data('num') > 1) {
             $('#prev').addClass('link-on');
           } else {
             $('#prev').removeClass('link-on');
           }
+
+          if ($('input:radio[name$=-diameter]').is(':checked') && $('input:radio[name$=-length]').is(':checked')) $('#next').addClass('link-on');
 
           if ($('.active').data('num') == 2) {
             $('#'+shape+'-finishes').addClass('on');
@@ -165,9 +173,27 @@
             }
           }
 
+          if ($('#'+shape+'-finishes > input:radio').is(':checked')) {
+            $('#next').addClass('link-on');
+          } else {
+            $('#next').removeClass('link-on');
+          }
+
           if ($('.active').data('num') == 3) $('#'+shape+'-mounting').addClass('on');
 
+          if ($('#'+shape+'-mounting > DIV').hasClass('selected')) {
+            $('#next').addClass('link-on');
+          } else {
+            $('#next').removeClass('link-on');
+          }
+
           if ($('.active').data('num') == 4) $('#'+shape+'-top').addClass('on');
+
+          if ($('#'+shape+'-top > DIV').hasClass('selected')) {
+            $('#next').addClass('link-on');
+          } else {
+            $('#next').removeClass('link-on');
+          }
 
           if ($('.active').data('num') == 5) {
             $('#left-step H2').text('Final Step:');
@@ -330,7 +356,7 @@
             <label for="rrfp-p">Painted Color</label><br>
 
             <span class="finish-color-label">Color Code:</span>
-            <input type="text" name="round-finish-color" class="finish-color">
+            <input type="text" name="round-finish-color" class="finish-color" disabled>
             <span id="round-finish-color-swatch" class="swatch"></span><br>
             <a href="#" data-featherlight="color-picker.php" data-featherlight-close-on-click="anywhere">Find A Color</a>
           </div>
@@ -361,7 +387,7 @@
             <label for="rsfp-p">Painted Color</label><br>
 
             <span class="finish-color-label">Color Code:</span>
-            <input type="text" name="square-finish-color" class="finish-color">
+            <input type="text" name="square-finish-color" class="finish-color" disabled>
             <span id="square-finish-color-swatch" class="swatch"></span><br>
             <a href="#" data-featherlight="color-picker.php" data-featherlight-close-on-click="anywhere">Find A Color</a>
           </div>
@@ -406,9 +432,9 @@
           <h3>Top Options</h3>
           <div id="top">
             <div id="round-top" class="top">
-              <div id="round-top-removable" data-top="Round Removable Black ABS&quot; 6 Only">
+              <div id="round-top-removable" data-top="Round Removable Black ABS">
                 <img src="images/bollard-round-top-removable.png" alt="">
-                Round Removable Black ABS 6" Only
+                Round Removable Black ABS
               </div>
 
               <div id="round-top-flat-welded" data-top="Round Flat Welded">
@@ -449,9 +475,9 @@
             </div> <!-- /#round-angle -->
 
             <div id="square-top" class="top">
-              <div id="square-top-removable" data-top="Square Removable Black ABS 4&quot; &amp; 6&quot; Only">
+              <div id="square-top-removable" data-top="Square Removable Black ABS">
                 <img src="images/bollard-square-top-removable.png" alt="">
-                Square Removable Black ABS 4" &amp; 6" Only
+                Square Removable Black ABS
               </div>
 
               <div id="square-top-flat-welded" data-top="Square Flat Welded">
